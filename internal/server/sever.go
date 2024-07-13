@@ -9,7 +9,7 @@ import (
 	"net"
 )
 
-const Port = 5001
+const port = 5001
 
 type Server struct {
 	grps     *grpc.Server
@@ -25,12 +25,12 @@ func Init() (Server, error) {
 }
 
 func (s *Server) Run() error {
-	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", Port))
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		return err
 	}
 	s.listener = listener
-	log.Printf("start server on %d port\n", Port)
+	log.Printf("start server on %d port\n", port)
 	if err := s.grps.Serve(listener); err != nil {
 		return err
 	}
