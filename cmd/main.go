@@ -1,22 +1,21 @@
 package main
 
 import (
-	"github.com/alexandermatseev/go_auth/internal/server"
+	"context"
+	"github.com/alexandermatseev/go_auth/app"
+	"log"
 )
 
 func main() {
-	s, err := server.Init()
+	ctx := context.Background()
+
+	a, err := app.NewApp(ctx)
 	if err != nil {
-		panic(err)
+		log.Fatalf("failed to init app: %s", err.Error())
 	}
 
-	if err = s.Run(); err != nil {
-		panic(err)
+	err = a.Run()
+	if err != nil {
+		log.Fatalf("failed to run app: %s", err.Error())
 	}
-
-	defer func() {
-		if _, err := s.Stop(); err != nil {
-			panic(err)
-		}
-	}()
 }
